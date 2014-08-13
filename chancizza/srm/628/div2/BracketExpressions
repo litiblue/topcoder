@@ -1,0 +1,124 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+class BracketExpressions
+{
+    static void Main(string[] args)
+    {
+        string expression = args[0];
+
+        Console.Write(ifPossible(expression));
+    }
+
+    public static string ifPossible(string expression)
+    {
+        char[] expCh = expression.ToCharArray();
+        char[] stackBracket = new char[expression.Length];
+        int stackBCnt = 0, stackXCnt = 0;
+
+        for (int i = 0; i < expCh.Length; i++)
+        {
+            if (expCh[i] == '(' || expCh[i] == '[' || expCh[i] == '{')
+            {
+                stackBracket[stackBCnt++] = expCh[i];
+            }
+            else if (expCh[i] == ')')
+            {
+                if (stackBCnt > 0)
+                {
+                    if (stackBracket[stackBCnt - 1] == '(')
+                    {
+                        stackBracket[--stackBCnt] = ' ';
+                    }
+                    else if (stackXCnt > 0)
+                    {
+                        stackXCnt--;
+                    }
+                    else
+                    {
+                        return "impossible";
+                    }
+                }
+                else if (stackXCnt > 0)
+                {
+                    stackXCnt--;
+                }
+                else
+                {
+                    return "impossible";
+                }
+            }
+            else if (expCh[i] == ']')
+            {
+                if (stackBCnt > 0)
+                {
+                    if (stackBracket[stackBCnt - 1] == '[')
+                    {
+                        stackBracket[--stackBCnt] = ' ';
+                    }
+                    else if (stackXCnt > 0)
+                    {
+                        stackXCnt--;
+                    }
+                    else
+                    {
+                        return "impossible";
+                    }
+                }
+                else if (stackXCnt > 0)
+                {
+                    stackXCnt--;
+                }
+                else
+                {
+                    return "impossible";
+                }
+            }
+            else if (expCh[i] == '}')
+            {
+                if (stackBCnt > 0)
+                {
+                    if (stackBracket[stackBCnt - 1] == '{')
+                    {
+                        stackBracket[--stackBCnt] = ' ';
+                    }
+                    else if (stackXCnt > 0)
+                    {
+                        stackXCnt--;
+                    }
+                    else
+                    {
+                        return "impossible";
+                    }
+                }
+                else if (stackXCnt > 0)
+                {
+                    stackXCnt--;
+                }
+                else
+                {
+                    return "impossible";
+                }
+            }
+            else if (expCh[i] == 'X')
+            {
+                stackXCnt++;
+            }
+            else
+            {
+                return "impossible";
+            }
+        }
+
+        if (stackBCnt != stackXCnt)
+        {
+            if (stackBCnt != 0 || (stackXCnt != 0 && stackXCnt % 2 == 1))
+                return "impossible";
+        }
+
+        return "possible";
+    }
+}
