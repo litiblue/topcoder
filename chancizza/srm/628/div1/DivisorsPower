@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+class DivisorsPower
+{
+    static void Main(string[] args)
+    {
+        long n = Int64.Parse(args[0]);
+
+        Console.Write(findArgument(n).ToString());
+    }
+
+    public static long findArgument(long n)
+    {
+        long x = n;
+        for (int i = 2; x >= 2; i++)
+        {
+            x = arrDivisors(n, i);
+
+            long maxDiv = maxDivisors(x);
+            if (maxDiv != 1)
+            {
+                if ((long)(Math.Pow(x, maxDiv)) == n)
+                {
+                    return x;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public static long maxDivisors(long n)
+    {
+        long cnt = 1;
+        for (long i = 1; i <= n / 2; i++)
+        {
+            if ((n % i) == 0)
+                cnt++;
+        }
+        return cnt;
+    }
+
+    public static long arrDivisors(long n, int cnt)
+    {
+        double x = (Math.Pow(n, (double)1 / (double)cnt));
+
+        return (long)Math.Round(x);
+    }
+}
