@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+class BishopMove
+{
+    static void Main(string[] args)
+    {
+        int r1 = Int32.Parse(args[0]);
+        int c1 = Int32.Parse(args[1]);
+        int r2 = Int32.Parse(args[2]);
+        int c2 = Int32.Parse(args[3]);
+
+        Console.Write(howManyMoves(r1, c1, r2, c2).ToString());
+    }
+
+    public static int howManyMoves(int r1, int c1, int r2, int c2)
+    {
+        if (r1 == r2 && c1 == c2)
+            return 0;
+        if (r1 - c1 == r2 - c2)
+            return 1;
+        int difRow = r1 - r2;
+        if (c1 + difRow == c2)
+            return 1;
+        if ((r1 + c1) % 2 == (r2 + c2) % 2)
+            return 2;
+        return -1;
+    }
+}
