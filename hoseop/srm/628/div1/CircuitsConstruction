@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+class CircuitsConstruction:
+	def type_cal(self, type, num1, num2):
+		if type=='A':	return num1+num2	# type A
+		else:	# type B
+			if num1 > num2:	return num1
+			else:	return num2
+			
+	def calcul(self, cur, circuit):
+		print cur, circuit
+		if circuit[cur+1]!='X':	num1 = self.calcul(cur+1, circuit)
+		else:	num1 = 1	# X1
+		if circuit[cur+2]!='X':	num2 = self.calcul(cur+2, circuit)
+		else:	num2 = 1	# X2
+		circuit.pop(cur+1)
+		circuit.pop(cur+1)
+		return self.type_cal(circuit[cur], num1, num2)
+
+	def maximizeResistance(self, circuit, conductors):
+		if len(conductors)==1:	return conductors[0]
+		s_con = []
+		for x in sorted(conductors):
+			s_con.append(int(x))
+		max_cnt = self.calcul(0, list(circuit))
+		max_sum = 0
+		for x in range(max_cnt):
+			max_sum = max_sum + s_con.pop()
+		return max_sum
