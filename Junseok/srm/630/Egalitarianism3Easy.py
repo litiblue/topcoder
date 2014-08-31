@@ -21,20 +21,23 @@ class Egalitarianism3Easy(object):
 				for j in range(1,n+1):
 					d[i][j] = min(d[i][j], d[i][k]+d[k][j])
 
-		def all_same(items):
-			return all(x == items[0] for x in items)
-
 		def is_possible(group, new_node):
-			dist_list = [d[each_node][new_node] for each_node in group]
-			return all_same(dist_list)
+			dist = d[group[0]][group[1]]
+			for each_node in group:
+				if d[each_node][new_node] != dist:
+					return False
+			return True
 
-		max_cnt = -999
+		max_cnt = 1
+		
 		for i in range(1,n+1):
-			group = [i]
 			for j in range(i+1,n+1):
-				if is_possible(group, j):
-					group.append(j)
-			max_cnt = max(max_cnt, len(group))
+				if d[i][j] != sys.maxint:
+					group = [i, j]
+					for k in range(j+1,n+1):
+						if is_possible(group, k):
+							group.append(k)
+					max_cnt = max(max_cnt, len(group))
 
 		return max_cnt
 
@@ -46,3 +49,4 @@ if __name__ == '__main__':
 	[1000,1000,1000,1000,1000,1000,1000,1000,1000]) == 9
 	print egal.maxCities(2, [1], [2], [3]) == 2
 	print egal.maxCities(1, [], [], []) == 1
+	print egal.maxCities(5, [3,4,2,5], [1,2,3,4], [446,446,446,443]) == 2
