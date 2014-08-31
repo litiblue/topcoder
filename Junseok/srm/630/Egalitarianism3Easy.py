@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 
-class Egaliterianism3Easy(object):
+class Egalitarianism3Easy(object):
 	
 	def maxCities(self, n, a, b, len):
 		d = [[sys.maxint] * (n+1)] * (n+1)
