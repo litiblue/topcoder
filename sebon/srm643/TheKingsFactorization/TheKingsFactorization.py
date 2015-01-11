@@ -17,8 +17,8 @@ class TheKingsFactorization(object):
 			while (remain%i == 0):
 				remain =  remain/i
 				ans.append(i)
+		start = 1
 		while True:
-			start = 1
 			if ((len(ans) +1)/2) ==len(primes):
 				if (remain != 1) : ans.append(remain)
 				return sorted(ans)
